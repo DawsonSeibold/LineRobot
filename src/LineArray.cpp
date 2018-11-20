@@ -10,6 +10,9 @@ const uint8_t SX1509_ADDRESS = 0x3E;  // SX1509 I2C address (00)
 
 SensorBar LineSensor = SensorBar(SX1509_ADDRESS);
 
+LineStates current_state = IDLE;
+// uint8_t current_state;
+
 void init_line_following() {
      //Default: the IR will only be turned on during reads.
      LineSensor.setBarStrobe();
@@ -37,4 +40,40 @@ void printData() {
 
      Serial.print("Position: ");
      Serial.println(LineSensor.getPosition());
+}
+
+void getState() {
+  return current_state;
+}
+
+void checkState() { //LineStates state
+  switch (current_state) {
+    case IDLE:
+      current_direction = STOP;
+      current_state = READ_LINE;
+    break;
+    case READ_LINE:
+      if (LineSensor.getDensity() < 7) {
+        current_state = GO_FORWARD;
+        current_direction = FORWARD;
+        if (LineSensor.getPosition() < -50) { current_state = GO_LEFT; current_direction = LEFT; }
+        if (LineSensor.getPosition() > 50) { current_state = GO_RIGHT; current_direction = RIGHT; }
+      }else {
+        current_state = IDLE;
+      }
+    break;
+    case GO_FORWARD:
+    break;
+    case GO_LEFT:
+    break;
+    case GO_RIGHT:
+    break;
+    default: //ALSO STOP CASE
+      current_direction = STOP;
+    break;
+  }
+}
+
+void completedMotorManeuver() {
+  current_state = READ_LINE;
 }

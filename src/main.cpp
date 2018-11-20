@@ -15,5 +15,7 @@ void setup() {
 
 void loop() {
      printData();
-     delay(1000);
+     checkState();
+     startManeuver();
+     // delay(1000);
 }
