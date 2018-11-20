@@ -29,7 +29,7 @@ The wheel direction polarity can be switched with RIGHT/LEFT_WHEEL_POL (or by fl
   #define LEFT_WHEEL_POL 1
 To check, hold the bot centered over a line so that the two middle sensors detect
   then observe.  Does the bot try to drive forward?
-  
+
 Resources:
 sensorbar.h
 
@@ -38,7 +38,7 @@ arduino > v1.6.4
 hw v1.0
 
 This code is released under the [MIT License](http://opensource.org/licenses/MIT).
-Please review the LICENSE.md file included with this example. If you have any questions 
+Please review the LICENSE.md file included with this example. If you have any questions
 or concerns with licensing, please contact techsupport@sparkfun.com.
 Distributed as-is; no warranty is given.
 ******************************************************************************/
@@ -81,7 +81,7 @@ void setup()
   Serial.begin(9600);  // start serial for output
   Serial.println("Program started.");
   Serial.println();
-  
+
   //Default: the IR will only be turned on during reads.
   mySensorBar.setBarStrobe();
   //Other option: Command to run all the time
@@ -91,7 +91,7 @@ void setup()
   mySensorBar.clearInvertBits();
   //Other option: light line on dark
   //mySensorBar.setInvertBits();
-  
+
   //Don't forget to call .begin() to get the bar ready.  This configures HW.
   uint8_t returnStatus = mySensorBar.begin();
   if(returnStatus)
@@ -103,7 +103,7 @@ void setup()
 	  Serial.println("sx1509 IC communication FAILED!");
   }
   Serial.println();
-  
+
 }
 
 void loop()
@@ -164,7 +164,7 @@ void driveBot( int16_t driveInput )
 	leftVar = -1 * driveInput * LEFT_WHEEL_POL;
 	motors.rightMotor(rightVar);
     motors.leftMotor(leftVar);
-	
+
 }
 
 //When using ( int16_t driveInput, float turnInput ), pass + for forward, + for right
@@ -179,7 +179,7 @@ void driveTurnBot( int16_t driveInput, float turnInput )
 	{
 		turnInput *= -1;
 	}
-	
+
 	//If turn is positive
 	if( turnInput > 0 )
 	{
@@ -195,7 +195,7 @@ void driveTurnBot( int16_t driveInput, float turnInput )
 	motors.rightMotor(rightVar);
     motors.leftMotor(leftVar);
 		delay(5);
-		
+
 }
 
 //When using turnBot( float turnInput ), pass + for spin right.
@@ -219,6 +219,5 @@ void turnBot( float turnInput )
 	motors.rightMotor(rightVar);
     motors.leftMotor(leftVar);
 	delay(5);
-	
-}
 
+}
