@@ -2,7 +2,7 @@
 #include "main.h"
 // #include "Ardumoto.h" ABSTRACTED
 
-// Ardumoto Moto;
+Ardumoto Moto;
 Directions current_direction = STOP;
 Directions last_direction = STOP;
 
@@ -18,7 +18,30 @@ void init_motors() {
 }
 
 
+void printDirection() {
+  switch (current_direction) {
+    case FORWARD:
+      Serial.println("FORWARD");
+    break;
+    case BACK:
+      Serial.println("BACK");
+    break;
+    case LEFT:
+      Serial.println("LEFT");
+    break;
+    case RIGHT:
+      Serial.println("RIGHT");
+    break;
+    case STOP:
+      Serial.println("STOP");
+    break;
+  }
+}
+
 void startManeuver() {
+  Serial.print("Current Direction: ");
+  Serial.println(current_direction);
+
   switch (current_direction) {
     case FORWARD:
       Moto.setSpeed(MotoA, normal_speed);

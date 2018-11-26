@@ -14,8 +14,9 @@ void setup() {
 }
 
 void loop() {
-     printData();
+     // printData();
      checkState();
-     startManeuver();
+     printDirection();
+     startManeuver(); //Power issue!
      // delay(1000);
 }

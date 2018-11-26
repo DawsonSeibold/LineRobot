@@ -15,6 +15,7 @@
      extern Directions last_direction;
      void init_motors();
      void startManeuver();
+     void printDirection();
 
 //LineArray.cpp ~ Line Following Array Sensor
      extern SensorBar LineSensor;

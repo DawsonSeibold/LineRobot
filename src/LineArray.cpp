@@ -49,29 +49,38 @@ void getState() {
 void checkState() { //LineStates state
   switch (current_state) {
     case IDLE:
+      Serial.println("Idle");
       current_direction = STOP;
       current_state = READ_LINE;
     break;
     case READ_LINE:
+      Serial.println("Read line...");
       if (LineSensor.getDensity() < 7) {
         current_state = GO_FORWARD;
         current_direction = FORWARD;
-        if (LineSensor.getPosition() < -50) { current_state = GO_LEFT; current_direction = LEFT; }
-        if (LineSensor.getPosition() > 50) { current_state = GO_RIGHT; current_direction = RIGHT; }
+        Serial.println("Set to forward");
+        if (LineSensor.getPosition() < -50) { current_state = GO_LEFT; current_direction = LEFT; Serial.println("Set to Right"); return; }
+        if (LineSensor.getPosition() > 50) { current_state = GO_RIGHT; current_direction = RIGHT; Serial.println("Set to Left"); return; }
+        if (LineSensor.getPosition() > -5 && LineSensor.getPosition() < 50) { current_state = GO_FORWARD; current_direction = FORWARD; return;}
       }else {
         current_state = IDLE;
       }
     break;
     case GO_FORWARD:
+      current_state = READ_LINE;
     break;
     case GO_LEFT:
+      current_state = READ_LINE;
     break;
     case GO_RIGHT:
+      current_state = READ_LINE;
     break;
     default: //ALSO STOP CASE
       current_direction = STOP;
+      current_state = READ_LINE;
     break;
   }
+  current_direction = RIGHT;
 }
 
 void completedMotorManeuver() {
