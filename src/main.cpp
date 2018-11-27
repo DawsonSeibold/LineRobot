@@ -18,5 +18,5 @@ void loop() {
      checkState();
      printDirection();
      startManeuver(); //Power issue!
-     // delay(1000);
+     // delay(10);
 }

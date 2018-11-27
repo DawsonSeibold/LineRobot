@@ -6,6 +6,9 @@ Ardumoto Moto;
 Directions current_direction = STOP;
 Directions last_direction = STOP;
 
+int current_maneuver_time = 0;
+int maneuver_time_out = 10;
+
 int normal_speed = 150;
 
 void init_motors() {
@@ -39,8 +42,17 @@ void printDirection() {
 }
 
 void startManeuver() {
+
+
+  current_maneuver_time++;
+  if (current_maneuver_time <= maneuver_time_out) {
+    return;
+  }
+  current_maneuver_time = 0;
+
   Serial.print("Current Direction: ");
   Serial.println(current_direction);
+
 
   switch (current_direction) {
     case FORWARD:

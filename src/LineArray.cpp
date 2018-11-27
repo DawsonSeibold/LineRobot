@@ -15,7 +15,7 @@ LineStates current_state = IDLE;
 
 void init_line_following() {
      //Default: the IR will only be turned on during reads.
-     LineSensor.setBarStrobe();
+     // LineSensor.setBarStrobe();
      //Other option: Command to run all the time
      //LineSensor.clearBarStrobe();
 
@@ -59,9 +59,9 @@ void checkState() { //LineStates state
         current_state = GO_FORWARD;
         current_direction = FORWARD;
         Serial.println("Set to forward");
-        if (LineSensor.getPosition() < -50) { current_state = GO_LEFT; current_direction = LEFT; Serial.println("Set to Right"); return; }
-        if (LineSensor.getPosition() > 50) { current_state = GO_RIGHT; current_direction = RIGHT; Serial.println("Set to Left"); return; }
-        if (LineSensor.getPosition() > -5 && LineSensor.getPosition() < 50) { current_state = GO_FORWARD; current_direction = FORWARD; return;}
+        if (LineSensor.getPosition() < -50) { current_state = GO_RIGHT; current_direction = RIGHT; Serial.println("Set to RIGHT"); return; }
+        if (LineSensor.getPosition() > 50) { current_state = GO_LEFT; current_direction = LEFT; Serial.println("Set to LEFT"); return; }
+        if (LineSensor.getPosition() > -50 && LineSensor.getPosition() < 50) { current_state = GO_FORWARD; current_direction = FORWARD; return;}
       }else {
         current_state = IDLE;
       }
