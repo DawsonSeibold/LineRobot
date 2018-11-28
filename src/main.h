@@ -19,7 +19,7 @@
 
 //LineArray.cpp ~ Line Following Array Sensor
      extern SensorBar LineSensor;
-     enum LineStates { IDLE, READ_LINE, GO_FORWARD, GO_LEFT, GO_RIGHT, GO_STOP };
+     enum LineStates { IDLE, READ_LINE, SEARCHING_FOR_LINE, GO_FORWARD, GO_LEFT, GO_RIGHT, GO_STOP };
      void init_line_following();
      void printData();
      void getState();

@@ -40,6 +40,10 @@ void printData() {
 
      Serial.print("Position: ");
      Serial.println(LineSensor.getPosition());
+
+     Serial.println("----------------------------------");
+     Serial.print("Direction: ");
+     Serial.println(current_direction);
 }
 
 void getState() {
@@ -47,6 +51,9 @@ void getState() {
 }
 
 void checkState() { //LineStates state
+  uint8_t density = LineSensor.getDensity();
+  int8_t position = LineSensor.getPosition();
+
   switch (current_state) {
     case IDLE:
       Serial.println("Idle");
@@ -55,17 +62,25 @@ void checkState() { //LineStates state
     break;
     case READ_LINE:
       Serial.println("Read line...");
-      if (LineSensor.getDensity() < 7) {
+
+      if (density <= 7 && density >= 1) {
+        if (position < 0) { current_state = GO_RIGHT; current_direction = RIGHT; Serial.println("Set to RIGHT"); return; }
+        if (position > 0) { current_state = GO_LEFT; current_direction = LEFT; Serial.println("Set to LEFT"); return; }
+        // if (LineSensor.getPosition() > -50 && LineSensor.getPosition() < 50) { current_state = GO_FORWARD; current_direction = FORWARD; return;}
         current_state = GO_FORWARD;
         current_direction = FORWARD;
         Serial.println("Set to forward");
-        if (LineSensor.getPosition() < -50) { current_state = GO_RIGHT; current_direction = RIGHT; Serial.println("Set to RIGHT"); return; }
-        if (LineSensor.getPosition() > 50) { current_state = GO_LEFT; current_direction = LEFT; Serial.println("Set to LEFT"); return; }
-        if (LineSensor.getPosition() > -50 && LineSensor.getPosition() < 50) { current_state = GO_FORWARD; current_direction = FORWARD; return;}
-      }else {
-        current_state = IDLE;
+      }else if (density == 8) { //SOLID LINE FOUND - ALL BLACK
+        current_state = READ_LINE; current_direction = STOP;
+      }else { // NO LINE FOUND
+        current_state = SEARCHING_FOR_LINE;
+        // current_direction = BACK;
+        current_direction = FORWARD;
       }
     break;
+    case SEARCHING_FOR_LINE:
+      current_state = READ_LINE;
+      break;
     case GO_FORWARD:
       current_state = READ_LINE;
     break;

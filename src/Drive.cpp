@@ -18,6 +18,8 @@ void init_motors() {
 
      Serial.println("Motors Setup Complete");
      Serial.println();
+
+     // Moto.setSpeed(MotoA, 150);
 }
 
 
@@ -60,14 +62,18 @@ void startManeuver() {
       Moto.setSpeed(MotoB, normal_speed);
     break;
     case BACK:
+      Moto.setSpeed(MotoA, -80);
+      Moto.setSpeed(MotoB, -80);
     break;
     case LEFT:
-      Moto.setSpeed(MotoA, normal_speed);
-      Moto.setSpeed(MotoB, -50);
-    break;
-    case RIGHT:
       Moto.setSpeed(MotoA, -50);
       Moto.setSpeed(MotoB, normal_speed);
+
+    break;
+    case RIGHT:
+      Moto.setSpeed(MotoA, normal_speed);
+      Moto.setSpeed(MotoB, -50);
+
     break;
     case STOP:
       Moto.stop(MotoA);
