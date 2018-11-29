@@ -50,7 +50,17 @@ void getState() {
   return current_state;
 }
 
+int counter = 0;
 void checkState() { //LineStates state
+
+  // counter++;
+  // if (counter >= 3000) {
+  //   current_direction = (current_direction + 1 > 4) ? LEFT : current_direction + 1;
+  //   counter = 0;
+  // }
+  // return;
+
+
   uint8_t density = LineSensor.getDensity();
   int8_t position = LineSensor.getPosition();
 
@@ -95,7 +105,6 @@ void checkState() { //LineStates state
       current_state = READ_LINE;
     break;
   }
-  current_direction = RIGHT;
 }
 
 void completedMotorManeuver() {

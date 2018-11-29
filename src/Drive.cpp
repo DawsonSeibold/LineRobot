@@ -7,7 +7,7 @@ Directions current_direction = STOP;
 Directions last_direction = STOP;
 
 int current_maneuver_time = 0;
-int maneuver_time_out = 10;
+int maneuver_time_out = 7;
 
 int normal_speed = 150;
 
@@ -19,7 +19,7 @@ void init_motors() {
      Serial.println("Motors Setup Complete");
      Serial.println();
 
-     // Moto.setSpeed(MotoA, 150);
+     // test_motors();
 }
 
 
@@ -46,11 +46,11 @@ void printDirection() {
 void startManeuver() {
 
 
-  current_maneuver_time++;
-  if (current_maneuver_time <= maneuver_time_out) {
-    return;
-  }
-  current_maneuver_time = 0;
+  // current_maneuver_time++;
+  // if (current_maneuver_time <= maneuver_time_out) {
+  //   return;
+  // }
+  // current_maneuver_time = 0;
 
   Serial.print("Current Direction: ");
   Serial.println(current_direction);
@@ -66,13 +66,13 @@ void startManeuver() {
       Moto.setSpeed(MotoB, -80);
     break;
     case LEFT:
-      Moto.setSpeed(MotoA, -50);
+      Moto.setSpeed(MotoA, -170);
       Moto.setSpeed(MotoB, normal_speed);
 
     break;
     case RIGHT:
       Moto.setSpeed(MotoA, normal_speed);
-      Moto.setSpeed(MotoB, -50);
+      Moto.setSpeed(MotoB, -170);
 
     break;
     case STOP:
@@ -80,6 +80,21 @@ void startManeuver() {
       Moto.stop(MotoB);
     break;
   }
+}
+
+void test_motors() {
+  Moto.setSpeed(MotoA, 150);
+  delay(5000);
+  Moto.stop(MotoA);
+  Moto.setSpeed(MotoA, -150);
+  delay(5000);
+  Moto.stop(MotoA);
+  Moto.setSpeed(MotoB, 150);
+  delay(5000);
+  Moto.stop(MotoB);
+  Moto.setSpeed(MotoB, -150);
+  delay(5000);
+  Moto.stop(MotoB);
 }
 
 //FUNCTIONS:
