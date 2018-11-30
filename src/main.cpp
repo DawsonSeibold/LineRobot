@@ -15,7 +15,7 @@ void setup() {
 
 void loop() {
      // return;
-     // printData();
+     printData();
      // delay(700);
      checkState();
      // printDirection();

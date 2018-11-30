@@ -7,9 +7,9 @@ Directions current_direction = STOP;
 Directions last_direction = STOP;
 
 int current_maneuver_time = 0;
-int maneuver_time_out = 7;
+int maneuver_time_out = 3;
 
-int normal_speed = 150;
+int normal_speed = 158;
 
 void init_motors() {
      Serial.println("Seting Up Motors...");
@@ -52,8 +52,8 @@ void startManeuver() {
   // }
   // current_maneuver_time = 0;
 
-  Serial.print("Current Direction: ");
-  Serial.println(current_direction);
+  // Serial.print("Current Direction: ");
+  // Serial.println(current_direction);
 
 
   switch (current_direction) {
