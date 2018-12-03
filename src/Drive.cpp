@@ -9,7 +9,7 @@ Directions last_direction = STOP;
 int current_maneuver_time = 0;
 int maneuver_time_out = 3;
 
-int normal_speed = 158;
+int normal_speed = 170;
 
 void init_motors() {
      Serial.println("Seting Up Motors...");
