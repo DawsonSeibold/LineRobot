@@ -11,10 +11,14 @@ void setup() {
      //MARK: Line Following Array
      init_line_following();
      init_motors();
+     init_arm();
 }
 
 void loop() {
-     // return;
+     dropBall();
+
+     update_servo_position();
+     return;
      printData();
      // delay(700);
      checkState();

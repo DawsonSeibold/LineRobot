@@ -6,6 +6,7 @@
 #include "Wire.h"
 #include "sensorbar.h"
 #include "Ardumoto.h"
+#include <Servo.h>
 
 //Drive.cpp ~ Setup & Control Motors
      // extern SensorBar LineSensor;
@@ -26,6 +27,11 @@
      void checkState();
      void completedMotorManeuver();
 
-
+//Arm.cpp ~ Controlling the ping pong ball arm
+     extern Servo armServo;
+     void init_arm();
+     void dropBall();
+     void getCurrentAngle();
+     void update_servo_position();
 
 #endif
