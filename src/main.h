@@ -20,18 +20,19 @@
 
 //LineArray.cpp ~ Line Following Array Sensor
      extern SensorBar LineSensor;
-     enum LineStates { IDLE, READ_LINE, SEARCHING_FOR_LINE, GO_FORWARD, GO_LEFT, GO_RIGHT, GO_STOP };
+     enum LineStates { DISABLED, IDLE, READ_LINE, SEARCHING_FOR_LINE, GO_FORWARD, GO_LEFT, GO_RIGHT, GO_STOP };
      void init_line_following();
      void printData();
      void getState();
      void checkState();
      void completedMotorManeuver();
+     void setLineState(LineStates new_state);
 
 //Arm.cpp ~ Controlling the ping pong ball arm
      extern Servo armServo;
      void init_arm();
      void dropBall();
-     void getCurrentAngle();
+     void update_arm();
      void update_servo_position();
 
 #endif

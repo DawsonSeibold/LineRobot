@@ -15,10 +15,8 @@ void setup() {
 }
 
 void loop() {
-     dropBall();
+     update_arm();
 
-     update_servo_position();
-     return;
      printData();
      // delay(700);
      checkState();

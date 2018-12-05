@@ -84,6 +84,8 @@ void checkState() { //LineStates state
   // Serial.print("State: ");
 
   switch (current_state) {
+       case DISABLED:
+          break;
     case IDLE:
       // Serial.println("IDLE");
       current_direction = STOP;
@@ -100,8 +102,8 @@ void checkState() { //LineStates state
         current_state = GO_FORWARD;
         current_direction = FORWARD;
         // Serial.println("Set to forward");
-      }else if (density == 8) { //SOLID LINE FOUND - ALL BLACK
-        current_state = READ_LINE; current_direction = STOP;
+   }else if (density >= 6) { //SOLID LINE FOUND - ALL BLACK
+        dropBall();
       }else { // NO LINE FOUND
         current_state = SEARCHING_FOR_LINE;
         // current_direction = BACK;
@@ -156,4 +158,8 @@ void checkState() { //LineStates state
 
 void completedMotorManeuver() {
   current_state = READ_LINE;
+}
+
+void setLineState(LineStates new_state) {
+     current_state = new_state;
 }

@@ -8,6 +8,10 @@ int update_timer_timeout = 1;
 int destination_angle = 180; //Angle to get to
 int rotate_step = 10; // 5 degs every update
 
+enum DROP_STAGES { PREPARING_DROP, DROPPING, BACKUP, FIND_LINE, DONE};
+DROP_STAGES current_stage = PREPARING_DROP;
+int current_stage_time = 0;
+
 Servo armServo;
 
 void init_arm() {
@@ -19,17 +23,30 @@ void init_arm() {
 }
 
 void dropBall() {
-     Serial.print("destination_angle: ");
-     Serial.println(destination_angle);
+     setLineState(DISABLED);
+     current_stage = PREPARING_DROP;
+     current_stage_time = 0;
+     current_direction = STOP;
 
-     Serial.print("current_angle: ");
-     Serial.println(armServo.read());
+     destination_angle = 180;
+}
 
-     if (destination_angle == 180) {
-          if (armServo.read() == 180) { destination_angle = 0; }
-          return;
+void update_arm() {
+     update_servo_position();
+
+     current_stage_time++;
+     int current_angle = armServo.read();
+
+     if (current_angle >= 100 && current_angle <= 106) { current_stage = DROPPING; current_stage_time = 0;}
+     if (current_stage == DROPPING && current_stage_time >= 40) {
+          current_stage = BACKUP;
+          current_stage_time = 0;
      }
-     if (armServo.read() == 0) { destination_angle = 180; }
+     if (current_stage == BACKUP) {
+          if (current_stage_time <= 10) { current_direction = BACK; }
+          if (current_stage_time > 10 && current_stage_time <= 20) { current_direction = LEFT; }
+          if (current_stage_time > 20) { setLineState(READ_LINE); }
+     }
 }
 
 void update_servo_position() {
