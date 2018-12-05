@@ -45,7 +45,16 @@ void update_arm() {
      if (current_stage == BACKUP) {
           if (current_stage_time <= 10) { current_direction = BACK; }
           if (current_stage_time > 10 && current_stage_time <= 20) { current_direction = LEFT; }
-          if (current_stage_time > 20) { setLineState(READ_LINE); }
+          if (current_stage_time > 20) {
+               setLineState(READ_LINE);
+               current_stage = FIND_LINE;
+               current_stage_time = 0;
+          }
+     }
+     if (current_stage == FIND_LINE && current_stage_time >= 80) {
+          destination_angle = 0;
+          current_stage = DONE;
+          current_stage_time = 0;
      }
 }
 
