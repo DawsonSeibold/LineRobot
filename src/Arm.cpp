@@ -19,6 +19,8 @@ void init_arm() {
 
      armServo.attach(ARM_PIN);
 
+     armServo.write(0);
+
      Serial.println("Arm Servo ready.");
 }
 
@@ -36,6 +38,9 @@ void update_arm() {
 
      current_stage_time++;
      int current_angle = armServo.read();
+
+     Serial.print("Stage Timer: ");
+     Serial.println(current_stage_time);
 
      if (current_angle >= 100 && current_angle <= 106) { current_stage = DROPPING; current_stage_time = 0;}
      if (current_stage == DROPPING && current_stage_time >= 40) {

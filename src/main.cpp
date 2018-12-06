@@ -12,11 +12,13 @@ void setup() {
      init_line_following();
      init_motors();
      init_arm();
+
+     dropBall();
 }
 
 void loop() {
      update_arm();
-
+     return;
      printData();
      // delay(700);
      checkState();
