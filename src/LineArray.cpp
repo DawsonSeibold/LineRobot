@@ -14,6 +14,8 @@ LineStates current_state = IDLE;
 // uint8_t current_state;
 
 int lost_timer = 0;
+int start_delay = 30;
+int start_delay_timer = 0;
 
 void init_line_following() {
      //Default: the IR will only be turned on during reads.
@@ -54,34 +56,10 @@ void getState() {
 
 int counter = 0;
 void checkState() { //LineStates state
-
-  // counter++;
-  // if (counter >= 3000) {
-  //   current_direction = (current_direction + 1 > 4) ? LEFT : current_direction + 1;
-  //   counter = 0;
-  // }
-  // return;
-
+     start_delay_timer++;
 
   uint8_t density = LineSensor.getDensity();
   int8_t position = LineSensor.getPosition();
-
-  // if (density <= 7 && density >= 1) {
-  //   if (position < 0) { current_state = GO_RIGHT; current_direction = RIGHT; Serial.println("Set to RIGHT"); return; }
-  //   if (position > 0) { current_state = GO_LEFT; current_direction = LEFT; Serial.println("Set to LEFT"); return; }
-  //   // if (LineSensor.getPosition() > -50 && LineSensor.getPosition() < 50) { current_state = GO_FORWARD; current_direction = FORWARD; return;}
-  //   current_state = GO_FORWARD;
-  //   current_direction = FORWARD;
-  //   Serial.println("Set to forward");
-  // }else if (density == 8) { //SOLID LINE FOUND - ALL BLACK
-  //   current_state = READ_LINE; current_direction = STOP;
-  // }else { // NO LINE FOUND
-  //   current_state = SEARCHING_FOR_LINE;
-  //   // current_direction = BACK;
-  //   current_direction = FORWARD;
-  // }
-  // return;
-  // Serial.print("State: ");
 
   switch (current_state) {
        case DISABLED:
@@ -103,7 +81,7 @@ void checkState() { //LineStates state
         current_direction = FORWARD;
         // Serial.println("Set to forward");
    }else if (density >= 6) { //SOLID LINE FOUND - ALL BLACK
-        dropBall();
+        if (start_delay_timer >= start_delay) { dropBall(); }
       }else { // NO LINE FOUND
         current_state = SEARCHING_FOR_LINE;
         // current_direction = BACK;
