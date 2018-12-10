@@ -5,7 +5,7 @@ int ARM_PIN = 9;
 int update_timer = 0;
 int update_timer_timeout = 1;
 
-int destination_angle = 180; //Angle to get to
+int destination_angle = 0; //Angle to get to
 int rotate_step = 10; // 5 degs every update
 
 enum DROP_STAGES { PREPARING_DROP, DROPPING, BACKUP, FIND_LINE, DONE};
@@ -49,8 +49,8 @@ void update_arm() {
      }
      if (current_stage == BACKUP) {
           if (current_stage_time <= 10) { current_direction = BACK; }
-          if (current_stage_time > 10 && current_stage_time <= 20) { current_direction = LEFT; }
-          if (current_stage_time > 20) {
+          if (current_stage_time > 10 && current_stage_time <= 15) { current_direction = LEFT; }
+          if (current_stage_time > 15) {
                setLineState(READ_LINE);
                current_stage = FIND_LINE;
                current_stage_time = 0;
