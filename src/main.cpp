@@ -14,12 +14,12 @@ void setup() {
 
      init_arm();
 
-     // dropBall();
+     dropBall();
 }
 
 void loop() {
      update_arm();
-
+     return;
      printData();
      // delay(700);
      checkState();

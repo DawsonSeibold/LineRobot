@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "main.h"
 
-int ARM_PIN = 9;
+int ARM_PIN = 10; //9
 int update_timer = 0;
 int update_timer_timeout = 1;
 
@@ -20,6 +20,7 @@ void init_arm() {
      armServo.attach(ARM_PIN);
 
      armServo.write(0);
+     destination_angle = 0;
 
      Serial.println("Arm Servo ready.");
 }
@@ -35,12 +36,10 @@ void dropBall() {
 
 void update_arm() {
      update_servo_position();
+     armServo.write(20);
 
      current_stage_time++;
      int current_angle = armServo.read();
-
-     Serial.print("Stage Timer: ");
-     Serial.println(current_stage_time);
 
      if (current_angle >= 100 && current_angle <= 106) { current_stage = DROPPING; current_stage_time = 0;}
      if (current_stage == DROPPING && current_stage_time >= 40) {
@@ -57,13 +56,17 @@ void update_arm() {
           }
      }
      if (current_stage == FIND_LINE && current_stage_time >= 80) {
-          destination_angle = 0;
           current_stage = DONE;
           current_stage_time = 0;
+     }
+     if (current_stage == DONE) {
+          destination_angle = 0;
      }
 }
 
 void update_servo_position() {
+     Serial.print("Servo Update; Angle: ");
+     Serial.println(armServo.read());
 
      update_timer++;
      if (update_timer <= update_timer_timeout) { return; }
