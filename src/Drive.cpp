@@ -45,7 +45,6 @@ void printDirection() {
 
 void startManeuver() {
 
-
   // current_maneuver_time++;
   // if (current_maneuver_time <= maneuver_time_out) {
   //   return;

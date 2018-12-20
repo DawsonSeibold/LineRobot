@@ -14,11 +14,17 @@ void setup() {
 
      init_arm();
 
-     dropBall();
+     // dropBall();
 }
 
+int count = 0;
 void loop() {
      update_arm();
+
+     count++;
+     if (count == 100) {
+          dropBall();
+     }
      return;
      printData();
      // delay(700);

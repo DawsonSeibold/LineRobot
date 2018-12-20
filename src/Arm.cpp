@@ -36,7 +36,7 @@ void dropBall() {
 
 void update_arm() {
      update_servo_position();
-     armServo.write(20);
+     // armServo.write(20);
 
      current_stage_time++;
      int current_angle = armServo.read();
