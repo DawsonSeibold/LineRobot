@@ -64,7 +64,7 @@ void checkState() { //LineStates state
   switch (current_state) {
        case DISABLED:
           break;
-    case IDLE:
+     case IDLE:
       // Serial.println("IDLE");
       current_direction = STOP;
       current_state = READ_LINE;
@@ -91,27 +91,11 @@ void checkState() { //LineStates state
     case SEARCHING_FOR_LINE:
       lost_timer++;
 
-      if (density > 0) {
-        current_state = READ_LINE;
-      }
-
-      if (lost_timer < 5) {
-        current_direction = FORWARD;
-        return;
-      }
-
-      if (lost_timer < 15) {
-        current_direction = BACK;
-        return;
-      }
-      if (lost_timer < 25) {
-        current_direction = LEFT;
-        return;
-      }
-      if (lost_timer < 65) {
-        current_direction = RIGHT;
-        return;
-      }
+      if (density > 0) { current_state = READ_LINE; }
+      if (lost_timer < 5) { current_direction = FORWARD; return; }
+      if (lost_timer < 15) { current_direction = BACK; return; }
+      if (lost_timer < 25) {current_direction = LEFT; return; }
+      if (lost_timer < 65) { current_direction = RIGHT; return; }
       current_direction = STOP;
       break;
     case GO_FORWARD:

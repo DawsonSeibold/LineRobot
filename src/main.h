@@ -8,6 +8,9 @@
 #include "Ardumoto.h"
 #include <Servo.h>
 
+//States
+extern boolean hasBall;
+
 //Drive.cpp ~ Setup & Control Motors
      // extern SensorBar LineSensor;
      extern Ardumoto Moto;
