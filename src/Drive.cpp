@@ -11,6 +11,10 @@ int maneuver_time_out = 3;
 
 int normal_speed = 170;
 
+bool passed_start_line = false;
+bool heading_to_finish_line = true;
+bool driving_backwards = false;
+
 void init_motors() {
      Serial.println("Seting Up Motors...");
 
@@ -41,6 +45,18 @@ void printDirection() {
       Serial.println("STOP");
     break;
   }
+}
+
+void passedHorizontalLines() {
+     if (!passed_start_line) { //Just passed the start line
+
+     }else {
+          if (heading_to_finish_line) { //Hit end, drop the ball, start heading backwards
+
+          }else { //Hit start, wait for loading, go forward
+
+          }
+     }
 }
 
 void startManeuver() {
