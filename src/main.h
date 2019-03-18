@@ -9,7 +9,7 @@
 #include <Servo.h>
 
 //States
-extern boolean hasBall;
+// extern boolean hasBall;
 
 //Drive.cpp ~ Setup & Control Motors
      // extern SensorBar LineSensor;
@@ -17,9 +17,13 @@ extern boolean hasBall;
      enum Directions { LEFT, RIGHT, FORWARD, BACK, STOP};
      extern Directions current_direction;
      extern Directions last_direction;
+     extern bool is_waiting_for_ball_loading;
+     extern bool stuck_at_start_line;
      void init_motors();
      void startManeuver();
      void printDirection();
+     void checkBallLoadingStatus();
+     void passedHorizontalLines();
 
 //LineArray.cpp ~ Line Following Array Sensor
      extern SensorBar LineSensor;
@@ -33,6 +37,8 @@ extern boolean hasBall;
 
 //Arm.cpp ~ Controlling the ping pong ball arm
      extern Servo armServo;
+     extern int BALL_LASER_READER_PIN;
+     extern int BALL_LASER_PIN;
      void init_arm();
      void dropBall();
      void update_arm();
