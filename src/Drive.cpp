@@ -119,8 +119,8 @@ void startManeuver() {
 
 void checkBallLoadingStatus() {
      time_to_load_ball_passed++;
-     // if (analogRead(BALL_LASER_READER_PIN) < 1000) { //Laser line broken
-     if (time_to_load_ball_passed >= time_to_load_ball) { //TODO add a laser and photocell to detect when the ball is loaded.
+     if (analogRead(BALL_LASER_READER_PIN) < 1000) { //Laser line broken
+     // if (time_to_load_ball_passed >= time_to_load_ball) { //TODO add a laser and photocell to detect when the ball is loaded.
           is_waiting_for_ball_loading = false;
           time_to_load_ball_passed = 0;
           Serial.println("Ball Loading Complete");
