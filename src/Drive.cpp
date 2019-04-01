@@ -9,7 +9,9 @@ Directions last_direction = STOP;
 int current_maneuver_time = 0;
 int maneuver_time_out = 3;
 
-int normal_speed = 170;
+int SPEED = 200; // 170
+int REVERSE_SPEED = 165;
+int normal_speed = SPEED; //170
 
 bool passed_start_line = false;
 bool stuck_at_start_line = false;
@@ -63,10 +65,12 @@ void passedHorizontalLines() {
                Serial.println("Finish Line ----------");
                dropBall();
                is_driving_backwards = true;
+               normal_speed = REVERSE_SPEED;
           }else { //Hit start, wait for loading, go forward
                Serial.println("Start Line (2nd) --------------");
                is_waiting_for_ball_loading = true;
                is_driving_backwards = false;
+               normal_speed = SPEED;
           }
      }
 }
@@ -93,22 +97,22 @@ void startManeuver() {
                Moto.setSpeed(MotoB, (is_driving_backwards ? 80 : -80));
                break;
           case LEFT:
-               if (is_driving_backwards) {//Go Right Instead
-                    Moto.setSpeed(MotoA, normal_speed);
-                    Moto.setSpeed(MotoB, -170);
-               }else {
+               // if (is_driving_backwards) {//Go Right Instead
+               //      Moto.setSpeed(MotoA, normal_speed);
+               //      Moto.setSpeed(MotoB, -170);
+               // }else {
                     Moto.setSpeed(MotoA, -170);
                     Moto.setSpeed(MotoB, normal_speed);
-               }
+               // }
           break;
                case RIGHT:
-               if (is_driving_backwards) {//Go Left instead
-                    Moto.setSpeed(MotoA, -170);
-                    Moto.setSpeed(MotoB, normal_speed);
-               }else {
+               // if (is_driving_backwards) {//Go Left instead
+               //      Moto.setSpeed(MotoA, -170);
+               //      Moto.setSpeed(MotoB, normal_speed);
+               // }else {
                     Moto.setSpeed(MotoA, normal_speed);
                     Moto.setSpeed(MotoB, -170);
-               }
+               // }
                break;
           case STOP:
                Moto.stop(MotoA);
@@ -119,8 +123,8 @@ void startManeuver() {
 
 void checkBallLoadingStatus() {
      time_to_load_ball_passed++;
-     if (analogRead(BALL_LASER_READER_PIN) < 1000) { //Laser line broken
-     // if (time_to_load_ball_passed >= time_to_load_ball) { //TODO add a laser and photocell to detect when the ball is loaded.
+     // if (analogRead(BALL_LASER_READER_PIN) < 1000) { //Laser line broken
+     if (time_to_load_ball_passed >= time_to_load_ball) { //TODO add a laser and photocell to detect when the ball is loaded.
           is_waiting_for_ball_loading = false;
           time_to_load_ball_passed = 0;
           Serial.println("Ball Loading Complete");

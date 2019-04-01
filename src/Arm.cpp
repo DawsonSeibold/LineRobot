@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "main.h"
 
-int ARM_PIN = 10; //9
+int ARM_PIN = 6; //9
 int BALL_LASER_READER_PIN = A0;
 int BALL_LASER_PIN = 9;
 int update_timer = 0;
@@ -19,10 +19,10 @@ Servo armServo;
 void init_arm() {
      Serial.println("Initalizing Ping Pong Arm Servo...");
 
-     pinMode(BALL_LASER_READER_PIN, INPUT);
-     pinMode(BALL_LASER_PIN, OUTPUT);
+     // pinMode(BALL_LASER_READER_PIN, INPUT);
+     // pinMode(BALL_LASER_PIN, OUTPUT);
 
-     digitalWrite(BALL_LASER_PIN, HIGH); //Turn the laser on
+     // digitalWrite(BALL_LASER_PIN, HIGH); //Turn the laser on
 
      armServo.attach(ARM_PIN);
 
@@ -57,17 +57,18 @@ void update_arm() {
           // current_stage = DONE;
      }
      if (current_stage == BACKUP) {
-          if (current_stage_time <= 10) { current_direction = BACK; }
-          if (current_stage_time > 15) {
+          current_direction = FORWARD; //Reversed in the Drive file
+          if (current_stage_time > 14) {
                setLineState(READ_LINE);
                current_stage = FIND_LINE;
                current_stage_time = 0;
           }
+          // current_direction = FORWARD;
           // if (current_stage_time > 10 && current_stage_time <= 15) { current_direction = LEFT; }
           // if (current_stage_time > 15) {
-          //      setLineState(READ_LINE);
-          //      current_stage = FIND_LINE;
-          //      current_stage_time = 0;
+               // setLineState(READ_LINE);
+               // current_stage = FIND_LINE;
+               // current_stage_time = 0;
           // }
      }
      if (current_stage == FIND_LINE && current_stage_time >= 80) {
@@ -77,7 +78,6 @@ void update_arm() {
      }
      if (current_stage == DONE) {
           destination_angle = 10;
-
      }
 }
 
