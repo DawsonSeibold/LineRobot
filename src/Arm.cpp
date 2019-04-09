@@ -26,8 +26,9 @@ void init_arm() {
 
      armServo.attach(ARM_PIN);
 
-     armServo.write(10);
-     destination_angle = 10;
+     armServo.write(95);
+     destination_angle = 95;
+
 
      Serial.println("Arm Servo ready.");
 }
@@ -38,20 +39,38 @@ void dropBall() {
      current_stage_time = 0;
      current_direction = STOP;
 
-     destination_angle = 160;
+     destination_angle = 110;
+     armServo.write(110);
+}
+
+void getServoPosition() {
+     Serial.print("Servo Position: ");
+     Serial.println(armServo.read());
 }
 
 void update_arm() {
-     update_servo_position();
+     // update_servo_position();
      // armServo.write(20);
 
      if (current_stage != DONE) { current_stage_time++; }
      int current_angle = armServo.read();
 
-     if (current_angle >= 100 && current_angle <= 106) { current_stage = DROPPING; current_stage_time = 0;}
+     if (current_angle >= 100) {
+          for (int i = 0; i < 3; i++) {
+               delay(550);
+               armServo.write(180);
+               delay(550);
+               armServo.write(110);
+          }
+          armServo.write(95);
+
+           current_stage = DROPPING;
+           current_stage_time = 0;
+      }
      // if (current_stage == DROPPING && analogRead(BALL_LASER_READER_PIN) < 1000) { //Laser line broke
-     if (current_stage == DROPPING && current_stage_time >= 40) {
+     if (current_stage == DROPPING && current_stage_time >= 20) { //Probably will need to shorten.; was 40
           Serial.println("Droped Ball, backing up ------");
+
           current_stage = BACKUP;
           current_stage_time = 0;
           // current_stage = DONE;

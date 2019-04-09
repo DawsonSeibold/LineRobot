@@ -43,5 +43,6 @@
      void dropBall();
      void update_arm();
      void update_servo_position();
+     void getServoPosition();
 
 #endif

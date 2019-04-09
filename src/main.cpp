@@ -19,6 +19,13 @@ void setup() {
 
 int count = 0;
 void loop() {
+     // getServoPosition();
+     // armServo.write(0);
+     // delay(2000);
+     // armServo.write(180);
+     // delay(2000);
+     // return;
+
      update_arm();
 
      if (is_waiting_for_ball_loading) {
@@ -28,6 +35,6 @@ void loop() {
           // printData();
           checkState();
           startManeuver(); //Power issue!
-          Serial.println("Looping");
+          // Serial.println("L ooping");
      }
 }

@@ -18,7 +18,7 @@ bool stuck_at_start_line = false;
 bool heading_to_finish_line = true;
 bool is_driving_backwards = false;
 
-int time_to_load_ball = 1000;
+int time_to_load_ball = 100;
 int time_to_load_ball_passed = 0;
 bool is_waiting_for_ball_loading = false;
 
@@ -66,11 +66,16 @@ void passedHorizontalLines() {
                dropBall();
                is_driving_backwards = true;
                normal_speed = REVERSE_SPEED;
+               heading_to_finish_line = false;
           }else { //Hit start, wait for loading, go forward
-               Serial.println("Start Line (2nd) --------------");
+               Serial.println("Start Line (2nd)  --------------");
                is_waiting_for_ball_loading = true;
                is_driving_backwards = false;
                normal_speed = SPEED;
+               heading_to_finish_line = true;
+
+               setLineState(DISABLED);
+               current_direction = STOP;
           }
      }
 }
@@ -128,6 +133,9 @@ void checkBallLoadingStatus() {
           is_waiting_for_ball_loading = false;
           time_to_load_ball_passed = 0;
           Serial.println("Ball Loading Complete");
+
+          setLineState(READ_LINE);
+          current_direction = FORWARD;
      }
 }
 
