@@ -19,11 +19,14 @@
      extern Directions last_direction;
      extern bool is_waiting_for_ball_loading;
      extern bool stuck_at_start_line;
+     extern bool should_turn_around;
      void init_motors();
      void startManeuver();
      void printDirection();
      void checkBallLoadingStatus();
      void passedHorizontalLines();
+     void turnAround();
+
 
 //LineArray.cpp ~ Line Following Array Sensor
      extern SensorBar LineSensor;

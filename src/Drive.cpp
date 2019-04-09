@@ -64,14 +64,14 @@ void passedHorizontalLines() {
           if (heading_to_finish_line) { //Hit end, drop the ball, start heading backwards
                Serial.println("Finish Line ----------");
                dropBall();
-               is_driving_backwards = true;
-               normal_speed = REVERSE_SPEED;
+               // is_driving_backwards = true;
+               // normal_speed = REVERSE_SPEED;
                heading_to_finish_line = false;
           }else { //Hit start, wait for loading, go forward
                Serial.println("Start Line (2nd)  --------------");
                is_waiting_for_ball_loading = true;
-               is_driving_backwards = false;
-               normal_speed = SPEED;
+               // is_driving_backwards = false;
+               // normal_speed = SPEED;
                heading_to_finish_line = true;
 
                setLineState(DISABLED);
@@ -134,8 +134,28 @@ void checkBallLoadingStatus() {
           time_to_load_ball_passed = 0;
           Serial.println("Ball Loading Complete");
 
-          setLineState(READ_LINE);
-          current_direction = FORWARD;
+          should_turn_around = true;
+          setLineState(DISABLED);
+          // setLineState(READ_LINE);
+          // current_direction = FORWARD;
+     }
+}
+
+int turn_around_time = 0;
+bool should_turn_around = false;
+
+void turnAround() {
+     if (should_turn_around == true) {
+          turn_around_time++;
+          current_direction = BACK;
+          if (turn_around_time >= 100 && turn_around_time <= 300) { current_direction = RIGHT; return;}
+          if (turn_around_time >= 200 && turn_around_time <= 310) {
+               setLineState(READ_LINE);
+               turn_around_time = 0;
+               should_turn_around = false;
+          }
+     }else {
+          turn_around_time = 0;
      }
 }
 

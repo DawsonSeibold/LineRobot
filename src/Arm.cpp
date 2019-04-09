@@ -29,6 +29,17 @@ void init_arm() {
      armServo.write(95);
      destination_angle = 95;
 
+     // for (int i = 0; i < 3; i++) {
+     //      // Moto.setSpeed(MotoA, 50);
+     //      delay(700);
+     //      armServo.write(180);
+     //      // Moto.setSpeed(MotoA, 0);
+     //      // Moto.setSpeed(MotoB, 50);
+     //      delay(700);
+     //      // Moto.setSpeed(MotoB, 0);
+     //      armServo.write(110);
+     // }
+     // armServo.write(95);
 
      Serial.println("Arm Servo ready.");
 }
@@ -37,6 +48,13 @@ void dropBall() {
      setLineState(DISABLED);
      current_stage = PREPARING_DROP;
      current_stage_time = 0;
+
+     Moto.setSpeed(MotoA, -80);
+     Moto.setSpeed(MotoB, -80);
+     delay(120);
+     Moto.setSpeed(MotoA, 0);
+     Moto.setSpeed(MotoB, 0);
+
      current_direction = STOP;
 
      destination_angle = 110;
@@ -56,10 +74,14 @@ void update_arm() {
      int current_angle = armServo.read();
 
      if (current_angle >= 100) {
-          for (int i = 0; i < 3; i++) {
-               delay(550);
+          for (int i = 0; i < 4; i++) {
+               // Moto.setSpeed(MotoA, 50);
+               delay(700);
                armServo.write(180);
-               delay(550);
+               // Moto.setSpeed(MotoA, 0);
+               // Moto.setSpeed(MotoB, 50);
+               delay(700);
+               // Moto.setSpeed(MotoB, 0);
                armServo.write(110);
           }
           armServo.write(95);
@@ -76,19 +98,19 @@ void update_arm() {
           // current_stage = DONE;
      }
      if (current_stage == BACKUP) {
-          current_direction = FORWARD; //Reversed in the Drive file
-          if (current_stage_time > 14) {
+          // current_direction = FORWARD; //Reversed in the Drive file
+          // if (current_stage_time > 14) {
+          //      setLineState(READ_LINE);
+          //      current_stage = FIND_LINE;
+          //      current_stage_time = 0;
+          // }
+          current_direction = BACK;
+          if (current_stage_time > 100 && current_stage_time <= 300) { current_direction = LEFT; }
+          if (current_stage_time > 310) {
                setLineState(READ_LINE);
                current_stage = FIND_LINE;
                current_stage_time = 0;
           }
-          // current_direction = FORWARD;
-          // if (current_stage_time > 10 && current_stage_time <= 15) { current_direction = LEFT; }
-          // if (current_stage_time > 15) {
-               // setLineState(READ_LINE);
-               // current_stage = FIND_LINE;
-               // current_stage_time = 0;
-          // }
      }
      if (current_stage == FIND_LINE && current_stage_time >= 80) {
           current_stage = DONE;

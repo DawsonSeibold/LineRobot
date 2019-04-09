@@ -27,6 +27,7 @@ void loop() {
      // return;
 
      update_arm();
+     turnAround();
 
      if (is_waiting_for_ball_loading) {
           checkBallLoadingStatus();

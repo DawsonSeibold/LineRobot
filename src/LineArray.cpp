@@ -107,10 +107,10 @@ void checkState() { //LineStates state
           lost_timer++;
 
           if (density > 0) { current_state = READ_LINE; }
-          if (lost_timer < 5) { current_direction = FORWARD; Serial.println("LOST: FORWARD"); return; }
-          if (lost_timer < 15) { current_direction = BACK; Serial.println("LOST: BACK"); return; }
-          if (lost_timer < 65) {current_direction = RIGHT; Serial.println("LOST: RIGHT"); return; }
-          if (lost_timer < 75) { current_direction = LEFT; Serial.println("LOST: LEFT"); return; }
+          if (lost_timer < 150) { current_direction = FORWARD; Serial.println("LOST: FORWARD"); return; }
+          if (lost_timer < 250) { current_direction = RIGHT; Serial.println("LOST: BACK"); return; }
+          if (lost_timer < 300) {current_direction = FORWARD; Serial.println("LOST: RIGHT"); return; }
+          if (lost_timer < 375) { current_direction = RIGHT; Serial.println("LOST: LEFT"); return; }
           current_direction = STOP;
           break;
      case GO_FORWARD:
