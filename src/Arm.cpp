@@ -105,8 +105,8 @@ void update_arm() {
           //      current_stage_time = 0;
           // }
           current_direction = BACK;
-          if (current_stage_time > 100 && current_stage_time <= 300) { current_direction = LEFT; }
-          if (current_stage_time > 310) {
+          if (current_stage_time > 100 && current_stage_time <= 200) { current_direction = LEFT; }
+          if (current_stage_time > 210) {
                setLineState(READ_LINE);
                current_stage = FIND_LINE;
                current_stage_time = 0;
